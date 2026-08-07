@@ -69,4 +69,108 @@
 // =============================================================================
 
 const readlineSync = require('readline-sync');
+const readlineSync = require('readline-sync');
 
+function readMatrix(rows, cols) {
+    let matrix = [];
+
+    for (let i = 0; i < rows; i++) {
+        let row = readlineSync.question(`Enter row ${i + 1}: `);
+        let numbers = row.split(' ').map(Number);
+        matrix.push(numbers);
+    }
+
+    return matrix;
+}
+
+function printMatrix(matrix) {
+    for (let i = 0; i < matrix.length; i++) {
+        let rowStr = "";
+        for (let j = 0; j < matrix[i].length; j++) {
+            rowStr += matrix[i][j] + " ";
+        }
+        console.log(rowStr.trim());
+    }
+}
+
+function transposeMatrix(matrix) {
+    let rows = matrix.length;
+    let cols = matrix[0].length;
+    let result = [];
+
+    for (let j = 0; j < cols; j++) {
+        let newRow = [];
+        for (let i = 0; i < rows; i++) {
+            newRow.push(matrix[i][j]);
+        }
+        result.push(newRow);
+    }
+
+    return result;
+}
+
+function addMatrices(A, B) {
+    let rows = A.length;
+    let cols = A[0].length;
+    let result = [];
+
+    for (let i = 0; i < rows; i++) {
+        let newRow = [];
+        for (let j = 0; j < cols; j++) {
+            newRow.push(A[i][j] + B[i][j]);
+        }
+        result.push(newRow);
+    }
+
+    return result;
+}
+
+function multiplyMatrices(A, B) {
+    let rowsA = A.length;
+    let colsA = A[0].length;
+    let colsB = B[0].length;
+
+    let result = [];
+
+    for (let i = 0; i < rowsA; i++) {
+        let newRow = [];
+        for (let j = 0; j < colsB; j++) {
+            let sum = 0;
+            for (let k = 0; k < colsA; k++) {
+                sum += A[i][k] * B[k][j];
+            }
+            newRow.push(sum);
+        }
+        result.push(newRow);
+    }
+
+    return result;
+}
+
+function main() {
+    let rows = readlineSync.questionInt("Enter number of rows: ");
+    let cols = readlineSync.questionInt("Enter number of columns: ");
+
+    console.log("Enter first matrix:");
+    let A = readMatrix(rows, cols);
+
+    console.log("Original Matrix:");
+    printMatrix(A);
+
+    console.log("Transposed Matrix:");
+    let T = transposeMatrix(A);
+    printMatrix(T);
+
+    console.log("Enter second matrix (same size):");
+    let B = readMatrix(rows, cols);
+
+    console.log("Sum of matrices:");
+    let S = addMatrices(A, B);
+    printMatrix(S);
+
+    console.log("Matrix Multiplication (A x B):");
+    let M = multiplyMatrices(A, B);
+    printMatrix(M);
+}
+
+main();
