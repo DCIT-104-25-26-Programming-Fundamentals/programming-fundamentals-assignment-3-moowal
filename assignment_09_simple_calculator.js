@@ -73,5 +73,107 @@
 // =============================================================================
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
+const readlineSync = require('readline-sync');
 
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    if (b === 0) {
+        return null;
+    }
+    return (a / b).toFixed(2);
+}
+
+function modulus(a, b) {
+    if (b === 0) {
+        return null;
+    }
+    return a % b;
+}
+
+function exponentiate(a, b) {
+    return a ** b;
+}
+
+function showMenu() {
+    console.log("\n======================");
+    console.log("   SIMPLE CALCULATOR");
+    console.log("======================");
+    console.log("1. Addition");
+    console.log("2. Subtraction");
+    console.log("3. Multiplication");
+    console.log("4. Division");
+    console.log("5. Modulus");
+    console.log("6. Exponentiation");
+    console.log("7. Quit");
+}
+
+function main() {
+    while (true) {
+        showMenu();
+        let choice = readlineSync.question("Select an operation (1-7): ");
+
+        if (choice === "7") {
+            console.log("Goodbye!");
+            break;
+        }
+
+        if (!["1","2","3","4","5","6"].includes(choice)) {
+            console.log("Error: Invalid menu choice.");
+            continue;
+        }
+
+        let a = parseFloat(readlineSync.question("Enter first number: "));
+        let b = parseFloat(readlineSync.question("Enter second number: "));
+
+        let result;
+
+        switch (choice) {
+            case "1":
+                result = add(a, b);
+                console.log(`Result: ${a} + ${b} = ${result}`);
+                break;
+            case "2":
+                result = subtract(a, b);
+                console.log(`Result: ${a} - ${b} = ${result}`);
+                break;
+            case "3":
+                result = multiply(a, b);
+                console.log(`Result: ${a} * ${b} = ${result}`);
+                break;
+            case "4":
+                result = divide(a, b);
+                if (result === null) {
+                    console.log("Error: Cannot divide by zero.");
+                } else {
+                    console.log(`Result: ${a} / ${b} = ${result}`);
+                }
+                break;
+            case "5":
+                result = modulus(a, b);
+                if (result === null) {
+                    console.log("Error: Cannot divide by zero.");
+                } else {
+                    console.log(`Result: ${a} % ${b} = ${result}`);
+                }
+                break;
+            case "6":
+                result = exponentiate(a, b);
+                console.log(`Result: ${a} ** ${b} = ${result}`);
+                break;
+        }
+    }
+}
+
+main();
 
